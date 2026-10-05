@@ -7,7 +7,7 @@ export default function ShopifyProviders({ children }: { children: React.ReactNo
   return (
     <ShopifyProvider
       storeDomain={process.env.NEXT_PUBLIC_STORE_DOMAIN!}
-      storefrontToken={process.env.NEXT_PUBLIC_STOREFRONT_API_TOKEN!}
+      storefrontToken={process.env.NEXT_PUBLIC_STOREFRONT_ACCESS_TOKEN!}
       storefrontApiVersion={storefrontApiVersion}
       countryIsoCode='US'
       languageIsoCode='EN'
