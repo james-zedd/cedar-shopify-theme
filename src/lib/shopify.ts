@@ -1,14 +1,13 @@
 import { createStorefrontClient } from '@shopify/hydrogen-react';
+import { STOREFRONT_API_VERSION } from "@/lib/constants";
 
 const storeDomain = process.env.NEXT_PUBLIC_STORE_DOMAIN!;
 const publicStorefrontToken = process.env.NEXT_PUBLIC_STOREFRONT_ACCESS_TOKEN!;
 
-export const storefrontApiVersion = "2026-04";
-
 const client = createStorefrontClient({
   storeDomain,
   publicStorefrontToken,
-  storefrontApiVersion,
+  storefrontApiVersion: STOREFRONT_API_VERSION,
 });
 
 export async function shopifyFetch<T>(
