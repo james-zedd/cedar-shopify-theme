@@ -1,32 +1,43 @@
-import { shopifyFetch } from "@/lib/shopify";
-import type { Product } from "@shopify/hydrogen-react/storefront-api-types";
+import { getCollection } from "@/lib/queries/collection";
 
-const PRODUCT_QUERY = `#graphql
-  query ProductQuery {
-    products(first: 1) {
-      nodes {
-        id
-        title
-        description
+const FEATURED_COLLECTION_HANDLE = "frontpage";
+
+type CollectionsMapProps = {
+  products: {
+    id: string;
+    title: string;
+    handle: string;
+  }[];
+};
+
+export const collectionsMap = ({ products }: CollectionsMapProps) => {
+  return (
+    <ul className="p-8">
+      {
+        products.map((product) => (
+          <li key={product.id}>{product.title} ({product.handle})</li>
+        ))
       }
-    }
-  }
-`;
-
-type ProductQuery = {
-  products: { nodes: Pick<Product, "id" | "title" | "description">[] };
+    </ul>
+  )
 };
 
 export default async function Home() {
-  const data = await shopifyFetch<ProductQuery>(PRODUCT_QUERY);
-  const product = data.products.nodes[0];
+  const collection = await getCollection(FEATURED_COLLECTION_HANDLE);
+
+  if (!collection) {
+    return (
+      <main className="p-8">
+        <p>Featured collection not found.</p>
+      </main>
+    )
+  }
 
   return (
     <main className="p-8">
-      <h1 className="text-2xl font-bold">
-        {product ? product.title : "No product found"}
-      </h1>
-      {product?.description && <p className="mt-2 text-lg">{product.description}</p>}
+      <h1 className="text-2xl font-bold">{collection.title}</h1>
+      {/* Temporary swap for <CollectionGrid products={ ... } /> once ProductCard is implemented */}
+      {collectionsMap({ products: collection.products.nodes })}
     </main>
-  );
+  )
 }
