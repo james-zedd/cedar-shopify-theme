@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import ProductCard from '../ProductCard';
-import { makeProduct } from './fixtures';
+import { makeProduct } from './_fixtures';
 
 describe('ProductCard', () => {
   afterEach(() => {
