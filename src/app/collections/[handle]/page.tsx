@@ -27,10 +27,10 @@ export default async function CollectionPage(
   let collection: CollectionWithProducts | null;
 
   try {
-    collection = await getCollection(handle, { pageSize: PAGE_SIZE, after, before });
+    collection = await getCollection(handle, { pageSize: PAGE_SIZE, after, before, availableOnly });
   } catch (error) {
     if (after || before) {
-      redirect(basePath);
+      redirect(availableOnly ? `${basePath}?available=true` : basePath);
     }
     throw error;
   }
