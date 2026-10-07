@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import CollectionGrid from "../CollectionGrid";
-import { makeProduct } from "./fixtures";
+import { makeProduct } from "./_fixtures";
 
 describe("CollectionGrid", () => {
   afterEach(() => {
