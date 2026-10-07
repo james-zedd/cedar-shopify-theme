@@ -9,11 +9,11 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { handle, title, featuredImage, priceRange } = product;
+  const { handle, title, availableForSale, featuredImage, priceRange } = product;
 
   return (
     <Link href={`/products/${handle}`} className="group block">
-      <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
         {featuredImage && (
           <Image
             data={featuredImage}
@@ -22,6 +22,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
+        )}
+        {!availableForSale && (
+          <span className="absolute left-2 top-2 rounded bg-gray-900 px-2 py-1 text-xs font-medium text-white">Sold out</span>
         )}
       </div>
       <h3 className="mt-3 text-sm font-medium">{title}</h3>

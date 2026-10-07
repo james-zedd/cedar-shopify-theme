@@ -5,6 +5,7 @@ export function makeProduct(overrides: Partial<CollectionProduct> = {}): Collect
     id: "gid://shopify/Product/1",
     handle: "product-1",
     title: "Product 1",
+    availableForSale: true,
     featuredImage: {
       url: "https://cdn.shopify.com/s/files/joke-book-cover.png",
       altText: "Product 1 Image",
