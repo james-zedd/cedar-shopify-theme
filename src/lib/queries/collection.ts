@@ -93,7 +93,7 @@ export async function getCollection(
     ? { last: pageSize, before }
     : { first: pageSize, after };
 
-  const filters = availableOnly ? [{ availableForSale: true }] : undefined;
+  const filters = availableOnly ? [{ available: true }] : undefined;
   
   const data = await shopifyFetch<CollectionQuery>(COLLECTION_QUERY, { handle, ...pagination, filters });
   

@@ -8,9 +8,6 @@ type PaginationProps = {
 };
 
 export default function Pagination({ basePath, pageInfo, query = {} }: PaginationProps) {
-  // href={{ pathname: basePath, query: { ...query, before: startCursor } }}
-  // href={{ pathname: basePath, query: { ...query, after: endCursor } }}
-
   const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo;
 
   if (!hasPreviousPage && !hasNextPage) {
