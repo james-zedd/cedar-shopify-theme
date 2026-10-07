@@ -23,6 +23,7 @@ const COLLECTION_QUERY = `#graphql
           id
           handle
           title
+          availableForSale
           featuredImage{
             url
             altText
@@ -51,7 +52,7 @@ const COLLECTION_QUERY = `#graphql
   }
 `
 
-export type CollectionProduct = Pick<Product, "id" | "handle" | "title"> & {
+export type CollectionProduct = Pick<Product, "id" | "handle" | "title" | "availableForSale"> & {
   featuredImage: Pick<Image, "url" | "altText" | "width" | "height"> | null;
   priceRange: {
     minVariantPrice: Pick<MoneyV2, "amount" | "currencyCode">;

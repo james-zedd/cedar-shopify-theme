@@ -36,6 +36,18 @@ describe('ProductCard', () => {
     expect(screen.queryByRole("img")).toBeNull();
   });
 
+  it("shows a sold out badge when the product is unavailable", () => {
+    render(<ProductCard product={makeProduct({ availableForSale: false })} />);
+
+    expect(screen.getByText("Sold out")).toBeDefined();
+  });
+
+  it("shows no sold out badge when the product is available", () => {
+    render(<ProductCard product={makeProduct()} />);
+
+    expect(screen.queryByText("Sold out")).toBeNull();
+  });
+
   it("links to the product detail page", () => {
     render(<ProductCard product={makeProduct()} />);
 
