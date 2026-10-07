@@ -13,12 +13,19 @@ const COLLECTION_QUERY = `#graphql
     $first: Int,
     $after: String,
     $before: String,
-    $last: Int
+    $last: Int,
+    $filters: [ProductFilter!]
   ) {
     collection(handle: $handle) {
       id
       title
-      products(first: $first, after: $after, before: $before, last: $last) {
+      products(
+        first: $first,
+        after: $after,
+        before: $before,
+        last: $last,
+        filters: $filters
+      ) {
         nodes {
           id
           handle
@@ -75,15 +82,20 @@ type CollectionPageOptions = {
   pageSize?: number;
   after?: string;
   before?: string;
+  availableOnly?: boolean;
 }
 
 export async function getCollection(
   handle: string,
-  { pageSize = 12, after, before }: CollectionPageOptions = {}
+  { pageSize = 12, after, before, availableOnly = false }: CollectionPageOptions = {}
 ): Promise<CollectionWithProducts | null> {
   const pagination = before
     ? { last: pageSize, before }
     : { first: pageSize, after };
-  const data = await shopifyFetch<CollectionQuery>(COLLECTION_QUERY, { handle, ...pagination });
+
+  const filters = availableOnly ? [{ availableForSale: true }] : undefined;
+  
+  const data = await shopifyFetch<CollectionQuery>(COLLECTION_QUERY, { handle, ...pagination, filters });
+  
   return data.collection;
 };
