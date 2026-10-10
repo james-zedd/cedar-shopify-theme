@@ -1,6 +1,6 @@
 "use client";
 
-import { ShopifyProvider } from '@shopify/hydrogen-react';
+import { CartProvider, ShopifyProvider } from '@shopify/hydrogen-react';
 import { STOREFRONT_API_VERSION } from "@/lib/constants";
 
 export default function ShopifyProviders({ children }: { children: React.ReactNode }) {
@@ -12,7 +12,9 @@ export default function ShopifyProviders({ children }: { children: React.ReactNo
       countryIsoCode='US'
       languageIsoCode='EN'
     >
-      {children}
+      <CartProvider>
+        {children}
+      </CartProvider>
     </ShopifyProvider>
   );
 }
