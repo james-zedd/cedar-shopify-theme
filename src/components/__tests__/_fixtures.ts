@@ -1,5 +1,7 @@
 import type { CollectionProduct } from "@/lib/queries/collection";
 import type { ProductDetail } from "@/lib/queries/product";
+import type { ComponentProps } from "react";
+import type { CartProvider } from "@shopify/hydrogen-react";
 
 export function makeProduct(overrides: Partial<CollectionProduct> = {}): CollectionProduct {
   return {
@@ -71,6 +73,65 @@ export function makeProductDetail(overrides: Partial<ProductDetail> = {}): Produ
       ],
     },
     metafields: [],
+    ...overrides,
+  };
+}
+
+export type CartData = NonNullable<ComponentProps<typeof CartProvider>["data"]>;
+type CartLineData = NonNullable<NonNullable<CartData["lines"]>["nodes"]>[number];
+
+export function makeCartLine(overrides: Partial<CartLineData> = {}): CartLineData {
+  return {
+    id: "gid://shopify/CartLine/1",
+    quantity: 2,
+    attributes: [],
+    cost: {
+      totalAmount: { amount: "25.98", currencyCode: "USD" },
+    },
+    merchandise: {
+      id: "gid://shopify/ProductVariant/1",
+      title: "Paperback",
+      image: {
+        url: "https://cdn.shopify.com/s/files/front-cover.png",
+        altText: "Front cover",
+        width: 2048,
+        height: 2048,
+      },
+      product: {
+        id: "gid://shopify/Product/1",
+        handle: "product-1",
+        title: "Product 1",
+      },
+    },
+    ...overrides,
+  };
+}
+
+export function makeCart(overrides: Partial<CartData> = {}): CartData {
+  return {
+    id: "gid://shopify/Cart/1",
+    checkoutUrl: "https://test-store.myshopify.com/cart/c/1",
+    totalQuantity: 3,
+    buyerIdentity: { countryCode: "US" },
+    lines: {
+      nodes: [
+        makeCartLine(),
+        makeCartLine({
+          id: "gid://shopify/CartLine/2",
+          quantity: 1,
+          cost: { totalAmount: { amount: "19.99", currencyCode: "USD" } },
+          merchandise: {
+            id: "gid://shopify/ProductVariant/3",
+            title: "Default Title",
+            product: { id: "gid://shopify/Product/2", handle: "product-2", title: "Product 2" },
+          },
+        }),
+      ],
+    },
+    cost: {
+      subtotalAmount: { amount: "45.97", currencyCode: "USD" },
+      totalAmount: { amount: "45.97", currencyCode: "USD" },
+    },
     ...overrides,
   };
 }
