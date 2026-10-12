@@ -16,7 +16,7 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 ### Engineering
 - **Server-side rendering** of product and collection pages, so crawlers receive fully rendered HTML
 - **Typed GraphQL queries** against the Shopify Storefront API, kept in `src/lib/queries/`
-- **[`@shopify/hydrogen-react`](https://shopify.dev/docs/api/hydrogen-react)** components and providers (`ShopifyProvider`, `CartProvider`, `Money`, `Image`, `AddToCartButton`) for cart state and money and image handling
+- **[`@shopify/hydrogen-react`](https://shopify.dev/docs/api/hydrogen-react)** components and providers (`ShopifyProvider`, `CartProvider`, `CartLineProvider`, `Money`, `Image`, `AddToCartButton`, `CartCost`, `CartCheckoutButton`) for cart state and money and image handling
 - **SEO and performance**: per-page metadata and Open Graph tags through the Next.js Metadata API, optimised images, and a Lighthouse / Core Web Vitals pass
 - **Loading skeletons and error boundaries** for slow or failed queries
 
@@ -43,8 +43,8 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 | Home page with featured collection grid | ✅ Done |
 | Collection pages with pagination and availability filter | ✅ Done |
 | Product detail page with variants and add to cart | ✅ Done |
-| Cart drawer and Shopify checkout | 🚧 In progress |
-| Navigation and layout | Planned |
+| Cart drawer and Shopify checkout | ✅ Done |
+| Navigation and layout | 🚧 In progress |
 | SEO, performance and design polish | Planned |
 | Playwright end-to-end tests | Planned |
 | Production deploy on Vercel | Planned |
