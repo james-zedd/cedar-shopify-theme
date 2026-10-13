@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ShopifyProviders from "@/providers/ShopifyProviders";
-import Link from "next/link";
-import CartDrawer from "@/components/CartDrawer";
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <ShopifyProviders>
-          <header className="flex items-center justify-between border-b px-8 py-4">
-            <Link href="/" className="text-xl font-bold">Cedar</Link>
-            <CartDrawer />
-          </header>
-          {children}
+          <Header />
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
         </ShopifyProviders>
       </body>
     </html>

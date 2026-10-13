@@ -1,7 +1,6 @@
 import { getCollection } from "@/lib/queries/collection";
 import CollectionGrid from "@/components/CollectionGrid";
-
-const FEATURED_COLLECTION_HANDLE = "jokes-for-kids";
+import { FEATURED_COLLECTION_HANDLE } from "@/lib/constants";
 
 export default async function Home() {
   const collection = await getCollection(FEATURED_COLLECTION_HANDLE);

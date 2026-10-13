@@ -1,10 +1,29 @@
+import { CartProvider, ShopifyProvider } from "@shopify/hydrogen-react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import ShopifyProviders from "@/providers/ShopifyProviders";
 import CartDrawer from "../CartDrawer";
+import { STOREFRONT_API_VERSION } from "@/lib/constants";
+import { makeCart, type CartData } from "./_fixtures";
 
 function renderCartDrawer() {
   return render(<CartDrawer />, { wrapper: ShopifyProviders });
+}
+
+function renderCartDrawerWithCart(cart: CartData) {
+  return render(
+    <ShopifyProvider
+      storeDomain="test-store.myshopify.com"
+      storefrontToken="test-token"
+      storefrontApiVersion={STOREFRONT_API_VERSION}
+      countryIsoCode="US"
+      languageIsoCode="EN"
+    >
+      <CartProvider data={cart}>
+        <CartDrawer />
+      </CartProvider>
+    </ShopifyProvider>,
+  );
 }
 
 describe("CartDrawer", () => {
@@ -49,5 +68,24 @@ describe("CartDrawer", () => {
     fireEvent.keyDown(document, { key: "Escape" });
 
     expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("shows the cart item count in the badge", () => {
+    renderCartDrawerWithCart(makeCart());
+
+    expect(screen.getByRole("button", { name: "Cart, 3 items" })).toBeDefined();
+    expect(screen.getByText("3")).toBeDefined();
+  });
+
+  it("uses the singular label for one item", () => {
+    renderCartDrawerWithCart(makeCart({ totalQuantity: 1 }));
+
+    expect(screen.getByRole("button", { name: "Cart, 1 item" })).toBeDefined();
+  });
+
+  it("hides the badge when the cart is empty", () => {
+    renderCartDrawerWithCart(makeCart({ totalQuantity: 0, lines: { nodes: [] } }));
+
+    expect(screen.getByRole("button", { name: "Cart" }).textContent).toBe("");
   });
 });
