@@ -22,7 +22,9 @@ export default function AvailabilityFilter({ basePath, availableOnly }: Availabi
             href={{ pathname: basePath, query: option.availableOnly ? { available: "true" } : {} }}
             aria-current={isActive ? "page" : undefined}
             className={`rounded-full border px-4 py-1 text-sm ${
-              isActive ? "border-gray-900 bg-gray-900 text-white" : "hover:bg-gray-100"
+              isActive
+                ? "border-foreground bg-foreground text-background"
+                : "border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
             }`}
           >
             {option.label}
