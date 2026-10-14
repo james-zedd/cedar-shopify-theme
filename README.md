@@ -45,6 +45,7 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 | Product detail page with variants and add to cart | ✅ Done |
 | Cart drawer and Shopify checkout | ✅ Done |
 | Navigation and layout | ✅ Done |
+| Manual integration test of the purchase flow and server-side rendering | ✅ Done |
 | SEO, performance and design polish | 🚧 In progress |
 | Playwright end-to-end tests | Planned |
 | Production deploy on Vercel | Planned |
