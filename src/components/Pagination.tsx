@@ -19,7 +19,7 @@ export default function Pagination({ basePath, pageInfo, query = {} }: Paginatio
       {hasPreviousPage && startCursor ? (
         <Link
           href={{ pathname: basePath, query: { ...query, before: startCursor } }}
-          className="rounded border px-4 py-2 hover:bg-gray-100"
+          className="rounded border px-4 py-2 hover:bg-muted"
         >
           ← Previous
         </Link>
@@ -29,7 +29,7 @@ export default function Pagination({ basePath, pageInfo, query = {} }: Paginatio
       {hasNextPage && endCursor ? (
         <Link
           href={{ pathname: basePath, query: { ...query, after: endCursor } }}
-          className="rounded border px-4 py-2 hover:bg-gray-100"
+          className="rounded border px-4 py-2 hover:bg-muted"
         >
           Next →
         </Link>

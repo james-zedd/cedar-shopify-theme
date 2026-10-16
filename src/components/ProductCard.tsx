@@ -15,7 +15,7 @@ export default function ProductCard({ product, aboveTheFold = false }: ProductCa
 
   return (
     <Link href={`/products/${handle}`} className="group block">
-      <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
         {featuredImage && (
           <Image
             src={featuredImage.url}
@@ -27,14 +27,14 @@ export default function ProductCard({ product, aboveTheFold = false }: ProductCa
           />
         )}
         {!availableForSale && (
-          <span className="absolute left-2 top-2 rounded bg-gray-900 px-2 py-1 text-xs font-medium text-white">Sold out</span>
+          <span className="absolute left-2 top-2 rounded bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">Sold out</span>
         )}
       </div>
       <h3 className="mt-3 text-sm font-medium">{title}</h3>
       <Money
         as="p"
         data={priceRange.minVariantPrice}
-        className="mt-1 text-sm text-gray-500"
+        className="mt-1 text-sm text-muted-foreground"
       />
     </Link>
   );

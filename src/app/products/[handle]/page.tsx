@@ -48,25 +48,25 @@ export default async function ProductPage(
   const pageCount = product.metafields.find((field) => field?.key === "page_count")?.value;
 
   return (
-    <main className="grid gap-8 p-8 md:grid-cols-2">
+    <main className="page-container grid gap-8 py-8 md:grid-cols-2 lg:gap-12">
       <ProductGallery images={product.images.nodes} title={product.title} />
       <section>
         <ProductDetails product={product} />
         <div
-          className="mt-6 space-y-4 text-gray-700"
+          className="mt-8 space-y-4 leading-relaxed text-foreground/80 [&_a]:underline [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-foreground [&_h3]:font-semibold [&_h3]:text-foreground [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5"
           dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.descriptionHtml) }}
         />
         {(author || pageCount) && (
-          <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+          <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 border-t pt-6 text-sm">
             {author && (
               <>
-                <dt className="font-medium">Author</dt>
+                <dt className="text-muted-foreground">Author</dt>
                 <dd>{author}</dd>
               </>
             )}
             {pageCount && (
               <>
-                <dt className="font-medium">Pages</dt>
+                <dt className="text-muted-foreground">Pages</dt>
                 <dd>{pageCount}</dd>
               </>
             )}

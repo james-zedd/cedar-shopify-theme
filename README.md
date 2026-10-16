@@ -10,15 +10,16 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 - **Home page** with a featured collection grid
 - **Collection pages** (`/collections/[handle]`) with cursor-based pagination and an in-stock / out-of-stock filter
 - **Product detail pages** (`/products/[handle]`) with an image gallery, variant selection (size, colour and other options), price display and add to cart
-- **Cart drawer** with line items, quantity controls, item removal, a live subtotal and a checkout button that hands off to Shopify's hosted checkout
+- **Cart drawer** that slides in, with line items, quantity controls, item removal, a live subtotal and a checkout button that hands off to Shopify's hosted checkout
 - **Responsive layout**, with a header, mobile navigation, a cart count badge and a footer
+- **Light and dark themes** that follow the visitor's system setting
 
 ### Engineering
 - **Server-side rendering** of product and collection pages, so crawlers receive fully rendered HTML
 - **Typed GraphQL queries** against the Shopify Storefront API, kept in `src/lib/queries/`
 - **[`@shopify/hydrogen-react`](https://shopify.dev/docs/api/hydrogen-react)** components and providers (`ShopifyProvider`, `CartProvider`, `CartLineProvider`, `Money`, `AddToCartButton`, `CartCost`, `CartCheckoutButton`) for cart state and money formatting
 - **SEO and performance**: per-page metadata and Open Graph tags through the Next.js Metadata API, responsive images through `next/image` with a custom loader that resizes on Shopify's CDN, server-rendered HTML for crawlers, Lighthouse scores of 95+ on the home, collection and product pages, and GA4 page view tracking through `@next/third-parties`
-- **Loading skeletons and error boundaries** for slow or failed queries
+- **Loading skeletons and error boundaries** for slow or failed queries (`loading.tsx`, `error.tsx` with retry, `global-error.tsx`, and a custom 404 page)
 
 ### Testing
 - **Unit and component tests** with [Vitest](https://vitest.dev) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/), covering components, cart logic and utility functions
@@ -47,7 +48,7 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 | Navigation and layout | ✅ Done |
 | Manual integration test of the purchase flow and server-side rendering | ✅ Done |
 | SEO and performance (GA4 route-change tracking to be confirmed after deploy) | ✅ Done |
-| Design polish | 🚧 In progress |
+| Design polish (Safari testing to follow after launch) | ✅ Done |
 | Playwright end-to-end tests | Planned |
 | Production deploy on Vercel | Planned |
 

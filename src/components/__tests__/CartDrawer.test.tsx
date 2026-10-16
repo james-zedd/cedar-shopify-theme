@@ -70,6 +70,27 @@ describe("CartDrawer", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 
+  it("moves focus to the close button when opened and back to the Cart button when closed", () => {
+    renderCartDrawer();
+
+    const cartButton = screen.getByRole("button", { name: "Cart" });
+    fireEvent.click(cartButton);
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Close cart" }));
+
+    fireEvent.click(screen.getByRole("button", { name: "Close cart" }));
+    expect(document.activeElement).toBe(cartButton);
+  });
+
+  it("locks page scrolling while open", () => {
+    renderCartDrawer();
+
+    fireEvent.click(screen.getByRole("button", { name: "Cart" }));
+    expect(document.documentElement.style.overflow).toBe("hidden");
+
+    fireEvent.click(screen.getByRole("button", { name: "Close cart" }));
+    expect(document.documentElement.style.overflow).toBe("");
+  });
+
   it("shows the cart item count in the badge", () => {
     renderCartDrawerWithCart(makeCart());
 

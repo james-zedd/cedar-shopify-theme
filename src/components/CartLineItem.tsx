@@ -16,7 +16,7 @@ export default function CartLineItem() {
 
   return (
     <div className="flex gap-4 py-4">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-gray-100">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-muted">
         {merchandise?.image?.url && (
           <Image
             src={merchandise.image.url}
@@ -31,7 +31,7 @@ export default function CartLineItem() {
         <div className="flex justify-between gap-4">
           <div>
             <h3 className="text-sm font-medium">{productTitle}</h3>
-            {showVariantTitle && <p className="text-sm text-gray-500">{variantTitle}</p>}
+            {showVariantTitle && <p className="text-sm text-muted-foreground">{variantTitle}</p>}
           </div>
           {cost?.totalAmount && <Money data={cost.totalAmount} className="text-sm" />}
         </div>
@@ -56,7 +56,7 @@ export default function CartLineItem() {
           <CartLineQuantityAdjustButton
             adjust="remove"
             aria-label={`Remove ${productTitle}`}
-            className="text-sm text-gray-500 underline disabled:opacity-50"
+            className="text-sm text-muted-foreground underline hover:text-foreground disabled:opacity-50"
           >
             Remove
           </CartLineQuantityAdjustButton>

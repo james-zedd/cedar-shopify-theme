@@ -7,7 +7,7 @@ type CollectionGridProps = {
 
 export default function CollectionGrid({ products }: CollectionGridProps) {
   if (products.length === 0) {
-    return <p className="text-gray-500">No products in this collection yet.</p>;
+    return <p className="text-muted-foreground">No products in this collection yet.</p>;
   }
 
   return (

@@ -14,12 +14,12 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
   const selectedImage = images[selectedIndex];
 
   if (!selectedImage) {
-    return <div className="aspect-square rounded-lg bg-gray-100" />
+    return <div className="aspect-square rounded-lg bg-muted" />
   }
 
   return (
     <div>
-      <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
         <Image
           src={selectedImage.url}
           alt={selectedImage.altText ?? title}
@@ -39,7 +39,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
                 onClick={() => setSelectedIndex(index)}
                 aria-label={`Show image ${index + 1} of ${images.length}`}
                 aria-current={index === selectedIndex}
-                className="relative block aspect-square w-full overflow-hidden rounded border-2 border-transparent aria-[current=true]:border-gray-900"
+                className="relative block aspect-square w-full overflow-hidden rounded border-2 border-transparent bg-muted aria-[current=true]:border-foreground"
               >
                 <Image
                   src={image.url}
