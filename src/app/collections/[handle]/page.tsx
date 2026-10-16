@@ -1,11 +1,41 @@
 import { notFound, redirect } from "next/navigation";
-import { getCollection } from "@/lib/queries/collection";
+import type { Metadata } from "next";
+import { getCollection, getCollectionSeo } from "@/lib/queries/collection";
+import { sharedOpenGraph, toOpenGraphImages } from "@/lib/seo";
 import type { CollectionWithProducts } from "@/lib/queries/collection";
 import AvailabilityFilter from "@/components/AvailabilityFilter";
 import CollectionGrid from "@/components/CollectionGrid";
 import Pagination from "@/components/Pagination";
 
 const PAGE_SIZE = 2;
+
+export async function generateMetadata(
+  props: PageProps<"/collections/[handle]">
+): Promise<Metadata> {
+  const { handle } = await props.params;
+  const collection = await getCollectionSeo(handle);
+
+  if (!collection) {
+    return { title: "Collection not found" };
+  }
+
+  const title = collection.seo.title || collection.title;
+  const description = collection.seo.description || collection.description;
+  const url = `/collections/${collection.handle}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      ...sharedOpenGraph,
+      title,
+      description,
+      url,
+      images: toOpenGraphImages(collection.image, collection.title),
+    },
+  };
+}
 
 function firstValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;

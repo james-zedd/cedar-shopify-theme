@@ -4,6 +4,8 @@ import "./globals.css";
 import ShopifyProviders from "@/providers/ShopifyProviders";
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { sharedOpenGraph } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +18,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cedar Shopify Theme",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    template: `%s | ${SITE_NAME}`,
+    default: SITE_NAME,
+  },
   description: "A Shopify theme for headless CMS",
+  openGraph: sharedOpenGraph,
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

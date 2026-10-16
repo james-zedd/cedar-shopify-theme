@@ -34,7 +34,12 @@ export function makeProductDetail(overrides: Partial<ProductDetail> = {}): Produ
     id: "gid://shopify/Product/1",
     handle: "product-1",
     title: "Product 1",
+    description: "A very funny book.",
     descriptionHtml: "<p>A very funny book.</p>",
+    seo: {
+      title: null,
+      description: null,
+    },
     availableForSale: true,
     images: {
       nodes: [
