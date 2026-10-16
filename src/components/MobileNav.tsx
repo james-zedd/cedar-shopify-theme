@@ -31,7 +31,7 @@ export default function MobileNav() {
         aria-expanded={isOpen}
         aria-controls={menuId}
         onClick={() => setIsOpen(!isOpen)}
-        className="p-1"
+        className="-ml-2 p-2"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="size-6">
           {isOpen ? (
@@ -41,19 +41,25 @@ export default function MobileNav() {
           )}
         </svg>
       </button>
-      {isOpen && (
-        <nav id={menuId} aria-label="Mobile" className="absolute inset-x-0 top-full z-40 border-b bg-background">
-          <ul className="flex flex-col px-8 py-4">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} onClick={() => setIsOpen(false)} className="block py-2 font-medium">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+      <nav
+        id={menuId}
+        aria-label="Mobile"
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+        className={`absolute inset-x-0 top-full z-40 border-b bg-background shadow-sm transition-[opacity,translate,visibility] duration-200 ease-out motion-reduce:transition-none ${
+          isOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
+        }`}
+      >
+        <ul className="page-container flex flex-col py-2">
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href} onClick={() => setIsOpen(false)} className="block py-3 font-medium">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

@@ -70,8 +70,8 @@ export default async function CollectionPage(
   }
 
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">{collection.title}</h1>
+    <main className="page-container py-8">
+      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{collection.title}</h1>
       <div className="mt-4">
         <AvailabilityFilter basePath={basePath} availableOnly={availableOnly} />
       </div>

@@ -8,7 +8,7 @@ export default function CartContents() {
   const cartLines = lines?.filter((line) => line !== undefined) ?? [];
 
   if (cartLines.length === 0) {
-    return <p className="text-gray-500">Your cart is empty.</p>;
+    return <p className="text-muted-foreground">Your cart is empty.</p>;
   }
 
   return (
@@ -29,8 +29,8 @@ export default function CartContents() {
             <CartCost amountType="subtotal" />
           </dd>
         </dl>
-        <p className="mt-1 text-sm text-gray-500">Taxes and shipping calculated at checkout.</p>
-        <CartCheckoutButton className="mt-4 w-full rounded bg-gray-900 px-6 py-3 text-white">
+        <p className="mt-1 text-sm text-muted-foreground">Taxes and shipping calculated at checkout.</p>
+        <CartCheckoutButton className="mt-4 w-full rounded bg-primary px-6 py-3 font-medium text-primary-foreground transition-opacity hover:opacity-90">
           Checkout
         </CartCheckoutButton>
       </div>

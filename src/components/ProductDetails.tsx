@@ -11,7 +11,7 @@ type ProductDetailsProps = {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <ProductProvider data={product}>
-      <h1 className="text-2xl font-bold">{product.title}</h1>
+      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{product.title}</h1>
       <SelectedVariantPrice />
       <div className="mt-6">
         <VariantSelector />
@@ -40,7 +40,7 @@ function SelectedVariantAddToCart() {
       variantId={selectedVariant?.id}
       disabled={!isAvailable}
       accessibleAddingToCartLabel="Adding item to your cart"
-      className="mt-6 w-full rounded bg-gray-900 px-6 py-3 text-white disabled:cursor-not-allowed disabled:bg-gray-300"
+      className="mt-8 w-full rounded bg-primary px-6 py-3 font-medium text-primary-foreground transition-opacity border disabled:border-primary hover:opacity-90 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:hover:opacity-100"
     >
       {isAvailable ? "Add to cart" : "Sold out"}
     </AddToCartButton>

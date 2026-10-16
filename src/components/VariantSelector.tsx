@@ -34,8 +34,8 @@ export default function VariantSelector() {
                     aria-pressed={isSelected}
                     className={`
                       rounded border px-4 py-2 text-sm
-                      ${isSelected ? "border-foreground bg-foreground text-background" : "border-gray-300 dark:border-gray-600"}
-                      ${inStock ? "" : "text-gray-400 line-through"}
+                      ${isSelected ? "border-foreground bg-foreground text-background" : "hover:border-foreground"}
+                      ${inStock ? "" : "text-muted-foreground line-through"}
                     `}
                   >
                     {value}

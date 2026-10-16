@@ -7,15 +7,15 @@ export default async function Home() {
 
   if (!collection) {
     return (
-      <main className="p-8">
+      <main className="page-container py-8">
         <p>Featured collection not found.</p>
       </main>
     )
   }
 
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">{collection.title}</h1>
+    <main className="page-container py-8">
+      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{collection.title}</h1>
       <section className="mt-6">
         <CollectionGrid products={collection.products.nodes} />
       </section>

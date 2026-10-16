@@ -21,10 +21,10 @@ export default function AvailabilityFilter({ basePath, availableOnly }: Availabi
             key={option.label}
             href={{ pathname: basePath, query: option.availableOnly ? { available: "true" } : {} }}
             aria-current={isActive ? "page" : undefined}
-            className={`rounded-full border px-4 py-1 text-sm ${
+            className={`rounded-full border px-4 py-1.5 text-sm ${
               isActive
                 ? "border-foreground bg-foreground text-background"
-                : "border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
+                : "hover:bg-muted"
             }`}
           >
             {option.label}
