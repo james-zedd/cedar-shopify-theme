@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Image } from "@shopify/hydrogen-react";
+import Image from "next/image";
 import type { ProductImage } from "@/lib/queries/product";
 
 type ProductGalleryProps = {
@@ -19,11 +19,13 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
 
   return (
     <div>
-      <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
         <Image
-          data={selectedImage}
+          src={selectedImage.url}
           alt={selectedImage.altText ?? title}
-          aspectRatio="1/1"
+          fill
+          loading="eager"
+          fetchPriority="high"
           sizes="(min-width: 768px) 50vw, 100vw"
           className="h-full w-full object-cover"
         />
@@ -37,13 +39,13 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
                 onClick={() => setSelectedIndex(index)}
                 aria-label={`Show image ${index + 1} of ${images.length}`}
                 aria-current={index === selectedIndex}
-                className="block aspect-square w-full overflow-hidden rounded border-2 border-transparent aria-[current=true]:border-gray-900"
+                className="relative block aspect-square w-full overflow-hidden rounded border-2 border-transparent aria-[current=true]:border-gray-900"
               >
                 <Image
-                  data={image}
+                  src={image.url}
                   alt=""
                   aria-hidden="true"
-                  aspectRatio="1/1"
+                  fill
                   sizes="10vw"
                   className="h-full w-full object-cover"
                 />

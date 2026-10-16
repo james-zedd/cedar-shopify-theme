@@ -16,8 +16,8 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 ### Engineering
 - **Server-side rendering** of product and collection pages, so crawlers receive fully rendered HTML
 - **Typed GraphQL queries** against the Shopify Storefront API, kept in `src/lib/queries/`
-- **[`@shopify/hydrogen-react`](https://shopify.dev/docs/api/hydrogen-react)** components and providers (`ShopifyProvider`, `CartProvider`, `CartLineProvider`, `Money`, `Image`, `AddToCartButton`, `CartCost`, `CartCheckoutButton`) for cart state and money and image handling
-- **SEO and performance**: per-page metadata and Open Graph tags through the Next.js Metadata API, optimised images, and a Lighthouse / Core Web Vitals pass
+- **[`@shopify/hydrogen-react`](https://shopify.dev/docs/api/hydrogen-react)** components and providers (`ShopifyProvider`, `CartProvider`, `CartLineProvider`, `Money`, `AddToCartButton`, `CartCost`, `CartCheckoutButton`) for cart state and money formatting
+- **SEO and performance**: per-page metadata and Open Graph tags through the Next.js Metadata API, responsive images through `next/image` with a custom loader that resizes on Shopify's CDN, server-rendered HTML for crawlers, Lighthouse scores of 95+ on the home, collection and product pages, and GA4 page view tracking through `@next/third-parties`
 - **Loading skeletons and error boundaries** for slow or failed queries
 
 ### Testing
@@ -46,7 +46,8 @@ Cedar is a headless Shopify storefront built with Next.js (App Router), TypeScri
 | Cart drawer and Shopify checkout | ✅ Done |
 | Navigation and layout | ✅ Done |
 | Manual integration test of the purchase flow and server-side rendering | ✅ Done |
-| SEO, performance and design polish | 🚧 In progress |
+| SEO and performance (GA4 route-change tracking to be confirmed after deploy) | ✅ Done |
+| Design polish | 🚧 In progress |
 | Playwright end-to-end tests | Planned |
 | Production deploy on Vercel | Planned |
 

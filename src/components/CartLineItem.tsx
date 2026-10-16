@@ -3,10 +3,10 @@
 import {
   CartLineQuantity,
   CartLineQuantityAdjustButton,
-  Image,
   Money,
   useCartLine,
 } from "@shopify/hydrogen-react";
+import Image from "next/image";
 
 export default function CartLineItem() {
   const { merchandise, cost } = useCartLine();
@@ -16,12 +16,12 @@ export default function CartLineItem() {
 
   return (
     <div className="flex gap-4 py-4">
-      <div className="h-20 w-20 shrink-0 overflow-hidden rounded bg-gray-100">
-        {merchandise?.image && (
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded bg-gray-100">
+        {merchandise?.image?.url && (
           <Image
-            data={merchandise.image}
+            src={merchandise.image.url}
             alt={merchandise.image.altText ?? productTitle}
-            aspectRatio="1/1"
+            fill
             sizes="80px"
             className="h-full w-full object-cover"
           />

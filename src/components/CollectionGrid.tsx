@@ -12,9 +12,9 @@ export default function CollectionGrid({ products }: CollectionGridProps) {
 
   return (
     <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-10">
-      {products.map((product) => (
+      {products.map((product, index) => (
         <li key={product.id}>
-          <ProductCard product={product} />
+          <ProductCard product={product} aboveTheFold={index < 4} />
         </li>
       ))}
     </ul>
