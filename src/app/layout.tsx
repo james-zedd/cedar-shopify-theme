@@ -4,8 +4,9 @@ import "./globals.css";
 import ShopifyProviders from "@/providers/ShopifyProviders";
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { GA_MEASUREMENT_ID, SITE_NAME, SITE_URL } from "@/lib/constants";
 import { sharedOpenGraph } from "@/lib/seo";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(SITE_URL ?? "http://localhost:3000"),
   title: {
     template: `%s | ${SITE_NAME}`,
     default: SITE_NAME,
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </ShopifyProviders>
       </body>
+      {GA_MEASUREMENT_ID && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
     </html>
   );
 }

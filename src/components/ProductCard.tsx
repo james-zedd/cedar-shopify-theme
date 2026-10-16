@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { Image, Money } from "@shopify/hydrogen-react";
+import { Money } from "@shopify/hydrogen-react";
+import Image from "next/image";
 import type { CollectionProduct } from "@/lib/queries/collection";
 
 type ProductCardProps = {
   product: CollectionProduct;
+  aboveTheFold?: boolean;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, aboveTheFold = false }: ProductCardProps) {
   const { handle, title, availableForSale, featuredImage, priceRange } = product;
 
   return (
@@ -16,9 +18,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
         {featuredImage && (
           <Image
-            data={featuredImage}
+            src={featuredImage.url}
             alt={featuredImage.altText ?? title}
-            aspectRatio="1/1"
+            fill
+            loading={aboveTheFold ? "eager" : "lazy"}
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
