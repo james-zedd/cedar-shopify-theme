@@ -7,6 +7,7 @@ import type {
   Product,
   ProductVariant,
   SelectedOption,
+  Seo,
 } from '@shopify/hydrogen-react/storefront-api-types';
 
 const PRODUCT_QUERY = `#graphql
@@ -15,7 +16,12 @@ const PRODUCT_QUERY = `#graphql
       id
       handle
       title
+      description(truncateAt: 160)
       descriptionHtml
+      seo {
+        title
+        description
+      }
       availableForSale
       images(first: 10) {
         nodes {
@@ -59,7 +65,8 @@ export type ProductDetailVariant = Pick<ProductVariant, "id" | "title" | "availa
   price: Pick<MoneyV2, "amount" | "currencyCode">;
 };
 
-export type ProductDetail = Pick<Product, "id" | "handle" | "title" | "descriptionHtml" | "availableForSale"> & {
+export type ProductDetail = Pick<Product, "id" | "handle" | "title" | "description" | "descriptionHtml" | "availableForSale"> & {
+  seo: Pick<Seo, "title" | "description">;
   images: { nodes: ProductImage[] };
   variants: { nodes: ProductDetailVariant[] };
   metafields: (Pick<Metafield, "key" | "value"> | null)[];

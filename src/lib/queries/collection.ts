@@ -1,7 +1,9 @@
 import { shopifyFetch } from "@/lib/shopify";
+import { cache } from "react";
 import type {
   Collection,
   Image,
+  Seo,
   MoneyV2,
   PageInfo,
   Product,
@@ -59,6 +61,26 @@ const COLLECTION_QUERY = `#graphql
   }
 `
 
+const COLLECTION_SEO_QUERY = `#graphql
+  query CollectionSeoQuery($handle: String!) {
+    collection(handle: $handle) {
+      handle
+      title
+      description(truncateAt: 160)
+      seo {
+        title
+        description
+      }
+      image {
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+`
+
 export type CollectionProduct = Pick<Product, "id" | "handle" | "title" | "availableForSale"> & {
   featuredImage: Pick<Image, "url" | "altText" | "width" | "height"> | null;
   priceRange: {
@@ -99,3 +121,18 @@ export async function getCollection(
   
   return data.collection;
 };
+
+export type CollectionSeo = Pick<Collection, "handle" | "title" | "description"> & {
+  seo: Pick<Seo, "title" | "description">;
+  image: Pick<Image, "url" | "altText" | "width" | "height"> | null;
+};
+
+type CollectionSeoQuery = {
+  collection: CollectionSeo | null;
+};
+
+export const getCollectionSeo = cache(async (handle: string): Promise<CollectionSeo | null> => {
+  const data = await shopifyFetch<CollectionSeoQuery>(COLLECTION_SEO_QUERY, { handle });
+
+  return data.collection;
+});

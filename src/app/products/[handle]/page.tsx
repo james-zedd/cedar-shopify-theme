@@ -4,6 +4,7 @@ import { getProduct } from "@/lib/queries/product";
 import ProductDetails from "@/components/ProductDetails";
 import ProductGallery from "@/components/ProductGallery";
 import { sanitizeProductHtml } from "@/lib/sanitize";
+import { sharedOpenGraph, toOpenGraphImages } from "@/lib/seo";
 
 export async function generateMetadata(
   props: PageProps<"/products/[handle]">
@@ -11,7 +12,26 @@ export async function generateMetadata(
   const { handle } = await props.params;
   const product = await getProduct(handle);
 
-  return { title: product?.title ?? "Product not found" };
+  if (!product) {
+    return { title: "Product not found" };
+  }
+
+  const title = product.seo.title || product.title;
+  const description = product.seo.description || product.description;
+  const url = `/products/${product.handle}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      ...sharedOpenGraph,
+      title,
+      description,
+      url,
+      images: toOpenGraphImages(product.images.nodes[0], product.title),
+    },
+  };
 }
 
 export default async function ProductPage(
