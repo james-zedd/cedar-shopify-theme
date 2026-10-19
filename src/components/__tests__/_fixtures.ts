@@ -1,4 +1,4 @@
-import type { CollectionProduct } from "@/lib/queries/collection";
+import type { CollectionProduct, CollectionSummary } from "@/lib/queries/collection";
 import type { ProductDetail } from "@/lib/queries/product";
 import type { ComponentProps } from "react";
 import type { CartProvider } from "@shopify/hydrogen-react";
@@ -24,6 +24,18 @@ export function makeProduct(overrides: Partial<CollectionProduct> = {}): Collect
         amount: "20.00",
         currencyCode: "USD",
       },
+    },
+    ...overrides,
+  };
+}
+
+export function makeCollectionSummary(overrides: Partial<CollectionSummary> = {}): CollectionSummary {
+  return {
+    id: "gid://shopify/Collection/1",
+    handle: "collection-1",
+    title: "Collection 1",
+    products: {
+      nodes: [makeProduct()],
     },
     ...overrides,
   };

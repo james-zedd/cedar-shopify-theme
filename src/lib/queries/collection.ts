@@ -9,6 +9,31 @@ import type {
   Product,
 } from "@shopify/hydrogen-react/storefront-api-types";
 
+const COLLECTION_PRODUCT_FRAGMENT = `#graphql
+  fragment CollectionProductFields on Product {
+    id
+    handle
+    title
+    availableForSale
+    featuredImage {
+      url
+      altText
+      width
+      height
+    }
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+  }
+`
+
 const COLLECTION_QUERY = `#graphql
   query CollectionQuery(
     $handle: String!,
@@ -29,26 +54,7 @@ const COLLECTION_QUERY = `#graphql
         filters: $filters
       ) {
         nodes {
-          id
-          handle
-          title
-          availableForSale
-          featuredImage{
-            url
-            altText
-            width
-            height
-          }
-          priceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-            maxVariantPrice {
-              amount
-              currencyCode
-            }
-          }
+          ...CollectionProductFields
         }
         pageInfo {
           hasNextPage
@@ -59,6 +65,25 @@ const COLLECTION_QUERY = `#graphql
       }
     }
   }
+  ${COLLECTION_PRODUCT_FRAGMENT}
+`
+
+const COLLECTIONS_QUERY = `#graphql
+  query CollectionsQuery($first: Int!, $productsFirst: Int!) {
+    collections(first: $first) {
+      nodes {
+        id
+        handle
+        title
+        products(first: $productsFirst) {
+          nodes {
+            ...CollectionProductFields
+          }
+        }
+      }
+    }
+  }
+  ${COLLECTION_PRODUCT_FRAGMENT}
 `
 
 const COLLECTION_SEO_QUERY = `#graphql
@@ -121,6 +146,34 @@ export async function getCollection(
   
   return data.collection;
 };
+
+// Shopify creates a "frontpage" collection by default; it isn't a real collection to shop.
+const HIDDEN_COLLECTION_HANDLES = ["frontpage"];
+
+export type CollectionSummary = Pick<Collection, "id" | "handle" | "title"> & {
+  products: {
+    nodes: CollectionProduct[];
+  };
+};
+
+type CollectionsQuery = {
+  collections: {
+    nodes: CollectionSummary[];
+  };
+};
+
+export async function getCollections(
+  { productsPerCollection = 4 }: { productsPerCollection?: number } = {}
+): Promise<CollectionSummary[]> {
+  const data = await shopifyFetch<CollectionsQuery>(COLLECTIONS_QUERY, {
+    first: 50,
+    productsFirst: productsPerCollection,
+  });
+
+  return data.collections.nodes.filter(
+    (collection) => !HIDDEN_COLLECTION_HANDLES.includes(collection.handle)
+  );
+}
 
 export type CollectionSeo = Pick<Collection, "handle" | "title" | "description"> & {
   seo: Pick<Seo, "title" | "description">;
