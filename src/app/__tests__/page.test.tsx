@@ -1,14 +1,21 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { getCollections } from "@/lib/queries/collection";
+import { getShop } from "@/lib/queries/shop";
 import Home from "../page";
-import { makeCollectionSummary, makeProduct } from "@/components/__tests__/_fixtures";
+import { HERO_FILLER } from "@/components/Hero";
+import { makeCollectionSummary, makeProduct, makeShop } from "@/components/__tests__/_fixtures";
 
 vi.mock("@/lib/queries/collection", () => ({
   getCollections: vi.fn(),
 }));
 
+vi.mock("@/lib/queries/shop", () => ({
+  getShop: vi.fn(),
+}));
+
 const mockGetCollections = vi.mocked(getCollections);
+const mockGetShop = vi.mocked(getShop);
 
 function makeProducts(collection: number, count: number) {
   return Array.from({ length: count }, (_, i) =>
@@ -40,9 +47,34 @@ async function renderHome() {
 }
 
 describe("Home page", () => {
+  beforeEach(() => {
+    mockGetShop.mockResolvedValue(makeShop());
+  });
+
   afterEach(() => {
     cleanup();
     mockGetCollections.mockReset();
+    mockGetShop.mockReset();
+  });
+
+  it("renders the hero from the shop's brand settings", async () => {
+    mockGetCollections.mockResolvedValue(collections);
+
+    await renderHome();
+
+    expect(screen.getByRole("heading", { level: 1, name: "Books that make you groan" })).toBeDefined();
+    expect(screen.getByRole("img", { name: "A stack of joke books" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Shop now" }).getAttribute("href")).toBe("/collections/jokes-for-kids");
+  });
+
+  it("renders the hero with filler content when the shop can't be loaded", async () => {
+    mockGetCollections.mockResolvedValue(collections);
+    mockGetShop.mockRejectedValue(new Error("Storefront API error"));
+
+    await renderHome();
+
+    expect(screen.getByRole("heading", { level: 1, name: HERO_FILLER.slogan })).toBeDefined();
+    expect(screen.getByRole("region", { name: "Jokes for Kids" })).toBeDefined();
   });
 
   it("renders a section for each collection with its products", async () => {
@@ -50,7 +82,7 @@ describe("Home page", () => {
 
     await renderHome();
 
-    expect(screen.getByRole("heading", { level: 1, name: "Shop our collections" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 2, name: "Shop our collections" })).toBeDefined();
 
     const men = screen.getByRole("region", { name: "Jokes for Men 40+" });
     const kids = screen.getByRole("region", { name: "Jokes for Kids" });
@@ -100,6 +132,7 @@ describe("Home page", () => {
     await renderHome();
 
     expect(screen.getByText("No collections found.")).toBeDefined();
-    expect(screen.queryByRole("heading", { level: 1 })).toBeNull();
+    expect(screen.queryByRole("heading", { name: "Shop our collections" })).toBeNull();
+    expect(screen.getByRole("heading", { level: 1, name: "Books that make you groan" })).toBeDefined();
   });
 });

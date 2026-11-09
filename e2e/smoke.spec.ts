@@ -3,7 +3,9 @@ import { expect, test } from "@playwright/test";
 test("home page shows collections and products from the store", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { level: 1, name: "Shop our collections" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Shop now" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "Shop our collections" })).toBeVisible();
 
   // The page is an async Server Component, so product cards only appear if the
   // Storefront API request succeeded at render time.
