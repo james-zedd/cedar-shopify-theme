@@ -1,5 +1,6 @@
 import type { CollectionProduct, CollectionSummary } from "@/lib/queries/collection";
 import type { ProductDetail } from "@/lib/queries/product";
+import type { ShopInfo } from "@/lib/queries/shop";
 import type { ComponentProps } from "react";
 import type { CartProvider } from "@shopify/hydrogen-react";
 
@@ -36,6 +37,33 @@ export function makeCollectionSummary(overrides: Partial<CollectionSummary> = {}
     title: "Collection 1",
     products: {
       nodes: [makeProduct()],
+    },
+    ...overrides,
+  };
+}
+
+export function makeShop(overrides: Partial<ShopInfo> = {}): ShopInfo {
+  return {
+    name: "Jokes 4 Folks",
+    brand: {
+      logo: {
+        image: {
+          url: "https://cdn.shopify.com/s/files/logo.png",
+          altText: "Jokes 4 Folks logo",
+          width: 320,
+          height: 80,
+        },
+      },
+      slogan: "Books that make you groan",
+      shortDescription: "Joke books for the whole family.",
+      coverImage: {
+        image: {
+          url: "https://cdn.shopify.com/s/files/cover.png",
+          altText: "A stack of joke books",
+          width: 2400,
+          height: 1200,
+        },
+      },
     },
     ...overrides,
   };

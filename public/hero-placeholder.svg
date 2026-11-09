@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1b3a"/>
+      <stop offset="0.6" stop-color="#1c3f6e"/>
+      <stop offset="1" stop-color="#3f6c95"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6cf" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#fff6cf" stop-opacity="0"/>
+    </radialGradient>
+    <g id="pine">
+      <rect x="-12" y="0" width="24" height="40" fill="#3b2a22"/>
+      <path d="M0 -300 L-70 -170 H70Z M0 -220 L-100 -70 H100Z M0 -130 L-130 0 H130Z" fill="#14503c"/>
+      <path d="M0 -300 L-34 -236 Q-14 -250 0 -238 Q14 -250 34 -236Z M0 -220 L-46 -150 Q-20 -166 0 -152 Q20 -166 46 -150Z M0 -130 L-56 -72 Q-26 -90 0 -74 Q26 -90 56 -72Z" fill="#f2f7fb"/>
+    </g>
+  </defs>
+
+  <rect width="2400" height="1200" fill="url(#sky)"/>
+
+  <!-- stars -->
+  <g fill="#ffffff">
+    <circle cx="140" cy="120" r="4"/><circle cx="420" cy="230" r="3"/><circle cx="610" cy="90" r="5"/>
+    <circle cx="820" cy="300" r="3"/><circle cx="990" cy="150" r="4"/><circle cx="1180" cy="70" r="3"/>
+    <circle cx="1300" cy="260" r="4"/><circle cx="1480" cy="130" r="3"/><circle cx="1900" cy="90" r="4"/>
+    <circle cx="2080" cy="250" r="3"/><circle cx="2260" cy="140" r="5"/><circle cx="2330" cy="380" r="3"/>
+    <circle cx="260" cy="400" r="3"/><circle cx="700" cy="440" r="4"/><circle cx="1120" cy="420" r="3"/>
+  </g>
+
+  <!-- snowy hills -->
+  <path d="M0 800 C 320 690 600 760 900 700 S 1500 620 1800 700 S 2200 660 2400 720 V1200 H0Z" fill="#9fc0dc"/>
+  <g>
+    <use href="#pine" transform="translate(240 800) scale(0.7)"/>
+    <use href="#pine" transform="translate(420 790) scale(0.55)"/>
+    <use href="#pine" transform="translate(980 745) scale(0.6)"/>
+    <use href="#pine" transform="translate(1150 740) scale(0.75)"/>
+    <use href="#pine" transform="translate(2120 730) scale(0.65)"/>
+    <use href="#pine" transform="translate(2290 745) scale(0.5)"/>
+  </g>
+  <path d="M0 920 C 280 840 560 900 880 850 S 1420 790 1720 860 S 2200 830 2400 880 V1200 H0Z" fill="#cfe1f0"/>
+
+  <!-- Christmas tree -->
+  <circle cx="1620" cy="400" r="210" fill="url(#glow)"/>
+  <rect x="1596" y="940" width="48" height="60" fill="#3b2a22"/>
+  <path d="M1620 400 L1520 610 H1720Z M1620 520 L1480 780 H1760Z M1620 670 L1440 960 H1800Z" fill="#17694b"/>
+  <path d="M1520 610 Q1570 640 1620 612 Q1670 640 1720 610 L1700 568 Q1660 596 1620 572 Q1580 596 1540 568Z M1480 780 Q1550 815 1620 784 Q1690 815 1760 780 L1737 737 Q1680 768 1620 742 Q1560 768 1503 737Z M1440 960 Q1530 998 1620 964 Q1710 998 1800 960 L1773 916 Q1700 950 1620 924 Q1540 950 1467 916Z" fill="#f2f7fb"/>
+  <path d="M1620 340 l17 40 l43 4 l-33 28 l10 42 l-37 -23 l-37 23 l10 -42 l-33 -28 l43 -4z" fill="#ffd34d"/>
+  <g>
+    <circle cx="1590" cy="530" r="13" fill="#e23b3b"/><circle cx="1655" cy="500" r="11" fill="#ffd34d"/>
+    <circle cx="1545" cy="690" r="14" fill="#ffd34d"/><circle cx="1625" cy="660" r="13" fill="#e23b3b"/>
+    <circle cx="1700" cy="700" r="13" fill="#5cc8ff"/><circle cx="1520" cy="860" r="15" fill="#e23b3b"/>
+    <circle cx="1610" cy="840" r="14" fill="#5cc8ff"/><circle cx="1690" cy="870" r="15" fill="#ffd34d"/>
+    <circle cx="1750" cy="840" r="12" fill="#e23b3b"/>
+  </g>
+
+  <!-- foreground snow and trees -->
+  <use href="#pine" transform="translate(2140 1010) scale(1.05)"/>
+  <use href="#pine" transform="translate(620 1030) scale(0.8)"/>
+  <path d="M0 1020 C 400 960 800 1020 1200 985 S 2000 1010 2400 975 V1200 H0Z" fill="#eef5fb"/>
+
+  <!-- falling snow -->
+  <g fill="#ffffff" opacity="0.9">
+    <circle cx="90" cy="560" r="7"/><circle cx="330" cy="640" r="5"/><circle cx="520" cy="330" r="6"/>
+    <circle cx="760" cy="580" r="8"/><circle cx="900" cy="210" r="5"/><circle cx="1060" cy="540" r="6"/>
+    <circle cx="1240" cy="360" r="7"/><circle cx="1380" cy="620" r="5"/><circle cx="1420" cy="200" r="6"/>
+    <circle cx="1840" cy="300" r="7"/><circle cx="1920" cy="560" r="6"/><circle cx="2040" cy="420" r="5"/>
+    <circle cx="2200" cy="560" r="8"/><circle cx="2340" cy="250" r="6"/><circle cx="180" cy="270" r="5"/>
+    <circle cx="1700" cy="180" r="5"/><circle cx="640" cy="760" r="6"/><circle cx="1280" cy="800" r="6"/>
+  </g>
+</svg>
