@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
+import PredictiveSearch from "@/components/PredictiveSearch";
 import { NAV_LINKS } from "@/lib/constants";
 
 export default function MobileNav() {
@@ -14,7 +15,8 @@ export default function MobileNav() {
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      // The search prevents the default on the Escape that closes its suggestions, so that one is skipped here.
+      if (event.key === "Escape" && !event.defaultPrevented) {
         setIsOpen(false);
       }
     }
@@ -50,6 +52,9 @@ export default function MobileNav() {
           isOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
         }`}
       >
+        <div className="page-container pt-4">
+          <PredictiveSearch onNavigate={() => setIsOpen(false)} />
+        </div>
         <ul className="page-container flex flex-col py-2">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>

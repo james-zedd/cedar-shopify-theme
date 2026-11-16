@@ -9,7 +9,7 @@ import type {
   Product,
 } from "@shopify/hydrogen-react/storefront-api-types";
 
-const COLLECTION_PRODUCT_FRAGMENT = `#graphql
+export const COLLECTION_PRODUCT_FRAGMENT = `#graphql
   fragment CollectionProductFields on Product {
     id
     handle
@@ -148,7 +148,7 @@ export async function getCollection(
 };
 
 // Shopify creates a "frontpage" collection by default; it isn't a real collection to shop.
-const HIDDEN_COLLECTION_HANDLES = ["frontpage"];
+export const HIDDEN_COLLECTION_HANDLES = ["frontpage"];
 
 export type CollectionSummary = Pick<Collection, "id" | "handle" | "title"> & {
   products: {

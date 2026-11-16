@@ -13,11 +13,13 @@ const client = createStorefrontClient({
 export async function shopifyFetch<T>(
   query: string,
   variables?: Record<string, unknown>,
+  { signal }: { signal?: AbortSignal } = {},
 ): Promise<T> {
   const res = await fetch(client.getStorefrontApiUrl(), {
     method: "POST",
     headers: client.getPublicTokenHeaders(),
     body: JSON.stringify({ query, variables }),
+    signal,
   });
   const json = await res.json();
   if (json.errors) throw new Error(JSON.stringify(json.errors));

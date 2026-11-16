@@ -13,6 +13,11 @@ vi.mock("@/components/CartDrawer", () => ({
   default: () => null,
 }));
 
+// The search needs the app router, which isn't under test here.
+vi.mock("@/components/PredictiveSearch", () => ({
+  default: () => <input aria-label="Search" />,
+}));
+
 const mockGetShop = vi.mocked(getShop);
 
 async function renderHeader() {
@@ -77,5 +82,13 @@ describe("Header", () => {
     await renderHeader();
 
     expect(screen.getByRole("navigation", { name: "Main" })).toBeDefined();
+  });
+
+  it("renders the search", async () => {
+    mockGetShop.mockResolvedValue(makeShop());
+
+    await renderHeader();
+
+    expect(screen.getByRole("textbox", { name: "Search" })).toBeDefined();
   });
 });
