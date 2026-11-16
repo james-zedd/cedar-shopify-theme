@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CartDrawer from "@/components/CartDrawer";
 import MobileNav from "@/components/MobileNav";
+import PredictiveSearch from "@/components/PredictiveSearch";
 import { NAV_LINKS } from "@/lib/constants";
 import { getShop } from "@/lib/queries/shop";
 
@@ -42,7 +43,12 @@ export default async function Header() {
             ))}
           </ul>
         </nav>
-        <CartDrawer />
+        <div className="flex items-center gap-4">
+          <div className="hidden w-64 md:block lg:w-80">
+            <PredictiveSearch />
+          </div>
+          <CartDrawer />
+        </div>
       </div>
     </header>
   );

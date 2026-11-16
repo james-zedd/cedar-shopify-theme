@@ -49,6 +49,16 @@ describe("shopifyFetch", () => {
     expect(init.headers["content-type"]).toBe("application/json");
   });
 
+  it("passes an abort signal to the request", async () => {
+    respondWith({ data: {} });
+    const { signal } = new AbortController();
+
+    await shopifyFetch("query { shop { name } }", undefined, { signal });
+
+    const [, init] = mockFetch.mock.calls[0];
+    expect(init.signal).toBe(signal);
+  });
+
   it("returns the data from the response", async () => {
     respondWith({ data: { shop: { name: "Cedar" } } });
 

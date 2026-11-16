@@ -14,6 +14,7 @@ The project shows how a Shopify theme can be rebuilt as a headless storefront: t
 - **Home page** with a featured collection grid
 - **Collection pages** (`/collections/[handle]`) with cursor-based pagination and an in-stock / out-of-stock filter
 - **Product detail pages** (`/products/[handle]`) with an image gallery, variant selection (size, colour and other options), price display and add to cart
+- **Predictive search** in the header and mobile menu: a debounced, keyboard-navigable dropdown of matching products and collections
 - **Cart drawer** that slides in, with line items, quantity controls, item removal, a live subtotal and a checkout button that hands off to Shopify's hosted checkout
 - **Responsive layout**, with a header, mobile navigation, a cart count badge and a footer
 - **Light and dark themes** that follow the visitor's system setting
@@ -124,7 +125,7 @@ All store data comes from the [Shopify Storefront API](https://shopify.dev/docs/
 
 ### Fetching data
 
-`src/lib/shopify.ts` exports `shopifyFetch`, a small typed helper for every server-side query. It uses hydrogen-react's `createStorefrontClient` to build the API URL and the public token headers, POSTs the query and variables, and throws if the response contains GraphQL errors, so pages can rely on `error.tsx` to show a retry state.
+`src/lib/shopify.ts` exports `shopifyFetch`, a small typed helper for every query. Pages call it on the server; the predictive search calls it from the browser as the shopper types, with an `AbortSignal` so a request for an outdated search term is dropped. It uses hydrogen-react's `createStorefrontClient` to build the API URL and the public token headers, POSTs the query and variables, and throws if the response contains GraphQL errors, so pages can rely on `error.tsx` to show a retry state.
 
 ```ts
 const data = await shopifyFetch<ProductQuery>(PRODUCT_QUERY, { handle });
@@ -140,8 +141,9 @@ Query strings start with `#graphql` so editors with GraphQL support highlight th
 | `CollectionQuery` | `queries/collection.ts` | Collection page | Cursor-based pagination and an in-stock filter (see below) |
 | `CollectionSeoQuery` | `queries/collection.ts` | Collection page metadata | SEO title and description, plus the image for Open Graph |
 | `ProductQuery` | `queries/product.ts` | Product page and its metadata | Images, up to 100 variants with their options and prices, and `custom.author` / `custom.page_count` metafields |
+| `PredictiveSearchQuery` | `queries/search.ts` | Header and mobile menu search | Up to 4 products and 4 collections per search term (`limitScope: EACH`) |
 
-The product card fields are defined once in a `CollectionProductFields` fragment and shared by `CollectionsQuery` and `CollectionQuery`.
+The product card fields are defined once in a `CollectionProductFields` fragment and shared by `CollectionsQuery`, `CollectionQuery` and `PredictiveSearchQuery`.
 
 ### Pagination and filtering
 
@@ -196,3 +198,4 @@ The site is deployed on [Vercel](https://vercel.com) from the `main` branch. Set
 | Playwright end-to-end tests | ✅ Done |
 | Vitest unit tests for utility functions | ✅ Done |
 | Documentation | ✅ Done |
+| Predictive search dropdown in the header | ✅ Done |
