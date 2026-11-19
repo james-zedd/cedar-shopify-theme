@@ -15,6 +15,7 @@ The project shows how a Shopify theme can be rebuilt as a headless storefront: t
 - **Collection pages** (`/collections/[handle]`) with cursor-based pagination and an in-stock / out-of-stock filter
 - **Product detail pages** (`/products/[handle]`) with an image gallery, variant selection (size, colour and other options), price display and add to cart
 - **Predictive search** in the header and mobile menu: a debounced, keyboard-navigable dropdown of matching products and collections
+- **Search results page** (`/search?q=`) with a result count, cursor-based pagination and a no-results state that suggests collections to browse. It's kept out of search engine indexes.
 - **Cart drawer** that slides in, with line items, quantity controls, item removal, a live subtotal and a checkout button that hands off to Shopify's hosted checkout
 - **Responsive layout**, with a header, mobile navigation, a cart count badge and a footer
 - **Light and dark themes** that follow the visitor's system setting
@@ -142,8 +143,9 @@ Query strings start with `#graphql` so editors with GraphQL support highlight th
 | `CollectionSeoQuery` | `queries/collection.ts` | Collection page metadata | SEO title and description, plus the image for Open Graph |
 | `ProductQuery` | `queries/product.ts` | Product page and its metadata | Images, up to 100 variants with their options and prices, and `custom.author` / `custom.page_count` metafields |
 | `PredictiveSearchQuery` | `queries/search.ts` | Header and mobile menu search | Up to 4 products and 4 collections per search term (`limitScope: EACH`) |
+| `SearchQuery` | `queries/search.ts` | Search results page | Products only, with the total count and cursor-based pagination |
 
-The product card fields are defined once in a `CollectionProductFields` fragment and shared by `CollectionsQuery`, `CollectionQuery` and `PredictiveSearchQuery`.
+The product card fields are defined once in a `CollectionProductFields` fragment and shared by `CollectionsQuery`, `CollectionQuery`, `PredictiveSearchQuery` and `SearchQuery`.
 
 ### Pagination and filtering
 
@@ -199,3 +201,4 @@ The site is deployed on [Vercel](https://vercel.com) from the `main` branch. Set
 | Vitest unit tests for utility functions | ✅ Done |
 | Documentation | ✅ Done |
 | Predictive search dropdown in the header | ✅ Done |
+| Search results page | ✅ Done |

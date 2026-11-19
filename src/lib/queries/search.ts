@@ -3,6 +3,7 @@ import {
   COLLECTION_PRODUCT_FRAGMENT,
   HIDDEN_COLLECTION_HANDLES,
   type CollectionProduct,
+  type CollectionWithProducts,
 } from "@/lib/queries/collection";
 import type { Collection } from "@shopify/hydrogen-react/storefront-api-types";
 
@@ -28,6 +29,78 @@ const PREDICTIVE_SEARCH_QUERY = `#graphql
   }
   ${COLLECTION_PRODUCT_FRAGMENT}
 `
+
+// `types: [PRODUCT]` means every result node is a Product, so the inline
+// fragment always matches.
+const SEARCH_QUERY = `#graphql
+  query SearchQuery(
+    $query: String!,
+    $first: Int,
+    $after: String,
+    $last: Int,
+    $before: String
+  ) {
+    search(
+      query: $query,
+      types: [PRODUCT],
+      first: $first,
+      after: $after,
+      last: $last,
+      before: $before
+    ) {
+      totalCount
+      nodes {
+        ... on Product {
+          ...CollectionProductFields
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+  ${COLLECTION_PRODUCT_FRAGMENT}
+`
+
+export type SearchResults = {
+  totalCount: number;
+  products: CollectionProduct[];
+  pageInfo: CollectionWithProducts["products"]["pageInfo"];
+};
+
+type SearchQuery = {
+  search: {
+    totalCount: number;
+    nodes: CollectionProduct[];
+    pageInfo: SearchResults["pageInfo"];
+  };
+};
+
+type SearchOptions = {
+  pageSize?: number;
+  after?: string;
+  before?: string;
+};
+
+export async function getSearchResults(
+  query: string,
+  { pageSize = 12, after, before }: SearchOptions = {}
+): Promise<SearchResults> {
+  const pagination = before
+    ? { last: pageSize, before }
+    : { first: pageSize, after };
+
+  const data = await shopifyFetch<SearchQuery>(SEARCH_QUERY, { query, ...pagination });
+
+  return {
+    totalCount: data.search.totalCount,
+    products: data.search.nodes,
+    pageInfo: data.search.pageInfo,
+  };
+}
 
 export type PredictiveSearchCollection = Pick<Collection, "id" | "handle" | "title">;
 
